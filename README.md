@@ -1,7 +1,7 @@
 # BaseProject
 
 Welcome to BaseProject! This repository serves as the foundation for our solution, comprising four main projects: `Domain`, `Infrastructure`, `Application`, `WebAPI`, and `Test`.
-It also includes Authentication and Authorization using JWT.
+It also includes Authentication and Authorization using `JWT`.
 
 ## Overview
 
