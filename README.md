@@ -39,7 +39,7 @@ To start using BaseProject, follow these steps:
 
 5. **Run and Test**: Run the solution locally and test the functionality of each project. Ensure that everything behaves as expected and meets the desired criteria.
 
-### Technologies Used:
+## Technologies Used:
 
 - .Net 8
 - Rest API
