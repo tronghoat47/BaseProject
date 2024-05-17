@@ -7,15 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{165F6F52-A91
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DE37E8A6-6B55-480B-8C9C-12C2847A995C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseProject.Domain", "src\BaseProject.Domain\BaseProject.Domain.csproj", "{7087E44C-7F82-4D67-80E6-B17559D55055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseProject.Domain", "src\BaseProject.Domain\BaseProject.Domain.csproj", "{7087E44C-7F82-4D67-80E6-B17559D55055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseProject.Infrastructure", "src\BaseProject.Infrastructure\BaseProject.Infrastructure.csproj", "{D80BC886-B0D3-4DEF-8C8F-31E049EB5DBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseProject.Infrastructure", "src\BaseProject.Infrastructure\BaseProject.Infrastructure.csproj", "{D80BC886-B0D3-4DEF-8C8F-31E049EB5DBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseProject.Application", "src\BaseProject.Application\BaseProject.Application.csproj", "{4716CE0D-1263-40A3-A7EA-DB4FC3A2C3A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseProject.Application", "src\BaseProject.Application\BaseProject.Application.csproj", "{4716CE0D-1263-40A3-A7EA-DB4FC3A2C3A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseProject.WebAPI", "src\BaseProject.WebAPI\BaseProject.WebAPI.csproj", "{8E750796-D0DF-4644-A93F-E539BFA40480}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseProject.WebAPI", "src\BaseProject.WebAPI\BaseProject.WebAPI.csproj", "{8E750796-D0DF-4644-A93F-E539BFA40480}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseProject.Test.Unit", "test\BaseProject.Test\BaseProject.Test.Unit.csproj", "{39A87D3A-A5F2-4AB7-9B76-2756EE151C0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseProject.Test.Unit", "test\BaseProject.Test.Unit\BaseProject.Test.Unit.csproj", "{BC94B557-99BC-4A81-9CD9-9B71884A544D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{8E750796-D0DF-4644-A93F-E539BFA40480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E750796-D0DF-4644-A93F-E539BFA40480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E750796-D0DF-4644-A93F-E539BFA40480}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39A87D3A-A5F2-4AB7-9B76-2756EE151C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39A87D3A-A5F2-4AB7-9B76-2756EE151C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39A87D3A-A5F2-4AB7-9B76-2756EE151C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39A87D3A-A5F2-4AB7-9B76-2756EE151C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC94B557-99BC-4A81-9CD9-9B71884A544D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC94B557-99BC-4A81-9CD9-9B71884A544D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC94B557-99BC-4A81-9CD9-9B71884A544D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC94B557-99BC-4A81-9CD9-9B71884A544D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +52,7 @@ Global
 		{D80BC886-B0D3-4DEF-8C8F-31E049EB5DBF} = {165F6F52-A915-4523-8539-A44BC9589697}
 		{4716CE0D-1263-40A3-A7EA-DB4FC3A2C3A0} = {165F6F52-A915-4523-8539-A44BC9589697}
 		{8E750796-D0DF-4644-A93F-E539BFA40480} = {165F6F52-A915-4523-8539-A44BC9589697}
-		{39A87D3A-A5F2-4AB7-9B76-2756EE151C0C} = {DE37E8A6-6B55-480B-8C9C-12C2847A995C}
+		{BC94B557-99BC-4A81-9CD9-9B71884A544D} = {DE37E8A6-6B55-480B-8C9C-12C2847A995C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D6C36A8-A612-4D4C-A412-43911660826A}

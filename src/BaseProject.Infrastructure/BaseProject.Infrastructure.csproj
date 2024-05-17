@@ -22,11 +22,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccess\" />
     <Folder Include="Migrations\" />
     <Folder Include="Services\" />
     <Folder Include="UnitOfWork\" />
     <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
