@@ -16,11 +16,8 @@ namespace BaseProject.Infrastructure.Services.Impl
             _mailSettings = mailSettings.Value;
         }
 
-        public async Task<bool> SendEmailAsync(string emailTo, string subject)
+        public async Task<bool> SendEmailAsync(string emailTo, string subject, string body)
         {
-            string body = subject.Equals(EmailConstants.SUBJECT_ACTIVE_ACCOUNT) ?
-                EmailConstants.BodyActivationEmail(emailTo, subject) : EmailConstants.BodyResetPasswordEmail(emailTo, subject);
-
             MailMessage message = new MailMessage(_mailSettings.SenderEmail, emailTo, subject, body);
             message.IsBodyHtml = true;
             message.BodyEncoding = Encoding.UTF8;

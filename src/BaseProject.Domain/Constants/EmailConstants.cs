@@ -8,7 +8,7 @@ namespace BaseProject.Domain.Constants
 {
     public static class EmailConstants
     {
-        public static string BodyActivationEmail(string email, string subject) =>
+        public static string BodyActivationEmail(string email) =>
             @"
 <!DOCTYPE html>
 <html lang=""en"">
@@ -63,7 +63,6 @@ namespace BaseProject.Domain.Constants
 </head>
 <body>
     <div class=""container"">
-        <h1>" + subject + @"</h1>
         <p>Hello,</p>
         <p>Welcome to Base Project. Thank you for using our servicesđe</p>
         <p>To experience the service, please activate your account. Click the button below:</p>
@@ -79,7 +78,7 @@ namespace BaseProject.Domain.Constants
 </html>
 ";
 
-        public static string BodyResetPasswordEmail(string email, string subject) =>
+        public static string BodyResetPasswordEmail(string email) =>
             @"
 <!DOCTYPE html>
 <html lang=""en"">
@@ -134,7 +133,6 @@ namespace BaseProject.Domain.Constants
 </head>
 <body>
     <div class=""container"">
-         <h1>" + subject + @"</h1>
         <p>Hello,</p>
         <p>We received a request to reset your password. If you did not make this request, you can ignore this email.</p>
         <p>To reset your password, please click the button below:</p>

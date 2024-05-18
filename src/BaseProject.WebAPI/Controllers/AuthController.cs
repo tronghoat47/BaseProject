@@ -18,7 +18,7 @@ namespace BaseProject.WebAPI.Controllers
         [HttpPost("test-send-email/{email}")]
         public async Task<IActionResult> TestSendEmail(string email)
         {
-            var result = await _emailService.SendEmailAsync(email, EmailConstants.SUBJECT_RESET_PASSWORD);
+            var result = await _emailService.SendEmailAsync(email, EmailConstants.SUBJECT_RESET_PASSWORD, EmailConstants.BodyActivationEmail(email));
             return Ok(result);
         }
     }
