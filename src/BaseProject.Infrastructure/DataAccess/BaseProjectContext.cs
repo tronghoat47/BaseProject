@@ -1,4 +1,5 @@
-﻿using BaseProject.Domain.Entities;
+﻿using BaseProject.Domain.Constants;
+using BaseProject.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -39,6 +40,8 @@ namespace BaseProject.Infrastructure.DataAccess
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).HasColumnType("tinyint");
                 entity.Property(e => e.Name).IsRequired();
+
+                entity.HasCheckConstraint("CK_Role_Name", $"Name IN ('{RoleConstant.ADMIN}', '{RoleConstant.USER}')");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -54,6 +57,7 @@ namespace BaseProject.Infrastructure.DataAccess
                 entity.HasOne(d => d.Role).WithMany(p => p.Users).HasForeignKey(d => d.RoleId);
 
                 entity.HasIndex(e => e.Email).IsUnique();
+                entity.HasCheckConstraint("CK_User_Status", $"Status IN ('{StatusUsersConstants.IN_ACTIVE}', '{StatusUsersConstants.ACTIVE}', '{StatusUsersConstants.LOCKED}')");
             });
 
             modelBuilder.Entity<RefreshToken>(entity =>

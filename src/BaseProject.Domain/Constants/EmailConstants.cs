@@ -148,7 +148,7 @@ namespace BaseProject.Domain.Constants
 </html>
 ";
 
-        public static readonly string SUBJECT_RESET_PASSWORD = "Base Project-Password Reset";
-        public static readonly string SUBJECT_ACTIVE_ACCOUNT = "Base Project-Active Account";
+        public const string SUBJECT_RESET_PASSWORD = "Base Project-Password Reset";
+        public const string SUBJECT_ACTIVE_ACCOUNT = "Base Project-Active Account";
     }
 }
