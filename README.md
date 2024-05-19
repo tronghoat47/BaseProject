@@ -28,7 +28,7 @@ To start using BaseProject, follow these steps:
 1. **Clone the Repository**: Clone this repository to your local machine using the following command:
 
    ```
-   git clone https://github.com/your-username/BaseProject.git
+   git clone https://github.com/tronghoat47/BaseProject.git
    ```
 
 2. **Build the Solution**: Open the solution file (`BaseProject.sln`) in your preferred IDE or text editor and build the solution to ensure all dependencies are resolved.
