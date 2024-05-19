@@ -4,9 +4,9 @@ using BaseProject.Infrastructure.DataAccess;
 
 namespace BaseProject.Infrastructure.Repositories
 {
-    internal class UserRepository : GenericRepository<User>, IUserRepository
+    internal class RefreshTokenRepository : GenericRepository<RefreshToken>, IRefreshTokenRepository
     {
-        public UserRepository(BaseProjectContext context) : base(context)
+        public RefreshTokenRepository(BaseProjectContext context) : base(context)
         {
         }
     }

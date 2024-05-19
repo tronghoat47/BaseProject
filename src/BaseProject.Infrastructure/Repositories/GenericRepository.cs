@@ -1,12 +1,7 @@
 ﻿using BaseProject.Domain.Interfaces;
 using BaseProject.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BaseProject.Infrastructure.Repositories
 {
@@ -81,6 +76,11 @@ namespace BaseProject.Infrastructure.Repositories
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
+        }
+
+        public void RemoveRange(IEnumerable<T> entities)
+        {
+            _context.Set<T>().RemoveRange(entities);
         }
     }
 }

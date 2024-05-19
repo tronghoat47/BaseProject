@@ -2,7 +2,7 @@
 
 namespace BaseProject.Domain.Interfaces
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IRefreshTokenRepository : IGenericRepository<RefreshToken>
     {
     }
 }

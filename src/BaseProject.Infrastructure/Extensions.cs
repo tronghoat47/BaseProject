@@ -1,6 +1,5 @@
-﻿using BaseProject.Infrastructure.Services.Core;
+﻿using BaseProject.Infrastructure.Services;
 using BaseProject.Infrastructure.Services.Impl;
-using BaseProject.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BaseProject.Infrastructure

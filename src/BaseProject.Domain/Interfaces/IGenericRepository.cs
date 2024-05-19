@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace BaseProject.Domain.Interfaces
 {
@@ -22,5 +17,7 @@ namespace BaseProject.Domain.Interfaces
         void Update(T entity);
 
         void Delete(T entity);
+
+        void RemoveRange(IEnumerable<T> entities);
     }
 }

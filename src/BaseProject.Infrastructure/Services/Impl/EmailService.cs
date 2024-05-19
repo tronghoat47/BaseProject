@@ -1,5 +1,4 @@
-﻿using BaseProject.Domain.Constants;
-using BaseProject.Infrastructure.Services.Core;
+﻿using BaseProject.Infrastructure.Services.Core;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;

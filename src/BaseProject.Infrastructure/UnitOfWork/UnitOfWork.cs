@@ -1,11 +1,6 @@
 ﻿using BaseProject.Domain.Interfaces;
 using BaseProject.Infrastructure.DataAccess;
 using BaseProject.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BaseProject.Infrastructure.UnitOfWork
 {
@@ -13,6 +8,7 @@ namespace BaseProject.Infrastructure.UnitOfWork
     {
         private readonly BaseProjectContext _context;
         private IUserRepository _userRepository;
+        private IRefreshTokenRepository _refreshTokenRepository;
 
         public UnitOfWork(BaseProjectContext context)
         {
@@ -21,6 +17,9 @@ namespace BaseProject.Infrastructure.UnitOfWork
 
         public IUserRepository UserRepository
             => _userRepository ??= new UserRepository(_context);
+
+        public IRefreshTokenRepository RefreshTokenRepository
+            => _refreshTokenRepository ??= new RefreshTokenRepository(_context);
 
         public async Task<int> CommitAsync()
         {
