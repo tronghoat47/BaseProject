@@ -8,6 +8,8 @@ namespace BaseProject.Infrastructure
     {
         public static void AddInfrastructureServices(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddScoped<ICookieService, CookieService>();
             services.AddScoped<IEmailService, EmailService>();
         }
     }
