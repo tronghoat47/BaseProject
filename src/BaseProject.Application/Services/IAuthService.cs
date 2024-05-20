@@ -10,7 +10,7 @@ namespace BaseProject.Application.Services
 
         Task<(string token, RefreshToken refreshToken)> RefreshTokenAsync(string refreshToken);
 
-        Task LogoutAsync(string userId);
+        Task<int> LogoutAsync(string userId);
 
         Task<int> ResetPasswordAsync(string email, string newPassword);
     }

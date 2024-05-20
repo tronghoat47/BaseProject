@@ -54,7 +54,12 @@ namespace BaseProject.Application.Services.Impl
             var user = await _unitOfWork.UserRepository.GetAsync(u => u.Email == email, u => u.Role);
             if (user == null || !_cryptographyHelper.VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
             {
-                throw new UnauthorizedAccessException("Invalid credentials");
+                throw new UnauthorizedAccessException("Email or password incorrect!!!");
+            }
+
+            if (user.Status != StatusUsersConstants.ACTIVE)
+            {
+                throw new UnauthorizedAccessException("Account is not activated");
             }
 
             var token = _tokenService.GenerateToken(user);
@@ -93,11 +98,11 @@ namespace BaseProject.Application.Services.Impl
             return (newJwtToken, newRefreshToken);
         }
 
-        public async Task LogoutAsync(string userId)
+        public async Task<int> LogoutAsync(string userId)
         {
             var tokens = await _unitOfWork.RefreshTokenRepository.GetAllAsync(rt => rt.UserId == userId);
             _unitOfWork.RefreshTokenRepository.RemoveRange(tokens);
-            await _unitOfWork.CommitAsync();
+            return await _unitOfWork.CommitAsync();
         }
 
         public async Task<int> ResetPasswordAsync(string email, string newPassword)
