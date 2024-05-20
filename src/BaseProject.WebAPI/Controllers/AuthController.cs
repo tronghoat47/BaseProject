@@ -67,7 +67,7 @@ namespace BaseProject.WebAPI.Controllers
         }
 
         [Authorize]
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public async Task<IActionResult> LogoutAsync()
         {
             try
@@ -208,6 +208,5 @@ namespace BaseProject.WebAPI.Controllers
                 return BadRequest(response);
             }
         }
-
     }
 }
