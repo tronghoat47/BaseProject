@@ -48,11 +48,11 @@ namespace BaseProject.WebAPI.Controllers
         {
             try
             {
-                var (token, refreshToken) = await _authService.LoginAsync(request.Email, request.Password);
+                var (token, refreshToken, role) = await _authService.LoginAsync(request.Email, request.Password);
                 var response = new GeneralResponse
                 {
                     Message = "User logged in successfully",
-                    Data = new { token, refreshToken }
+                    Data = new { token, refreshToken, role }
                 };
                 return Ok(response);
             }
@@ -182,11 +182,11 @@ namespace BaseProject.WebAPI.Controllers
         {
             try
             {
-                var (newToken, newRefreshToken) = await _authService.RefreshTokenAsync(refreshTokenRequest.UserId, refreshTokenRequest.RefreshToken);
+                var (newToken, newRefreshToken, role) = await _authService.RefreshTokenAsync(refreshTokenRequest.UserId, refreshTokenRequest.RefreshToken);
                 var response = new GeneralResponse
                 {
                     Message = "Token refreshed successfully",
-                    Data = new { newToken, newRefreshToken }
+                    Data = new { newToken, newRefreshToken, role }
                 };
                 return Ok(response);
             }

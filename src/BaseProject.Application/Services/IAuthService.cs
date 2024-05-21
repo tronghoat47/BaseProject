@@ -6,9 +6,9 @@ namespace BaseProject.Application.Services
     {
         Task<User> RegisterAsync(string email, string password, int roleId);
 
-        Task<(string token, RefreshToken refreshToken)> LoginAsync(string email, string password);
+        Task<(string token, string refreshToken, string role)> LoginAsync(string email, string password);
 
-        Task<(string token, RefreshToken refreshToken)> RefreshTokenAsync(string userId, string refreshToken);
+        Task<(string token, string refreshToken, string role)> RefreshTokenAsync(string userId, string refreshToken);
 
         Task<int> LogoutAsync(string userId);
 

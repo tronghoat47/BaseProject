@@ -49,7 +49,7 @@ namespace BaseProject.Application.Services.Impl
             return user;
         }
 
-        public async Task<(string token, RefreshToken refreshToken)> LoginAsync(string email, string password)
+        public async Task<(string token, string refreshToken, string role)> LoginAsync(string email, string password)
         {
             var user = await _unitOfWork.UserRepository.GetAsync(u => u.Email == email, u => u.Role);
             if (user == null || !_cryptographyHelper.VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
@@ -69,10 +69,10 @@ namespace BaseProject.Application.Services.Impl
             await _unitOfWork.RefreshTokenRepository.AddAsync(refreshToken);
             await _unitOfWork.CommitAsync();
 
-            return (token, refreshToken);
+            return (token, refreshToken.TokenHash, user.Role.Name);
         }
 
-        public async Task<(string token, RefreshToken refreshToken)> RefreshTokenAsync(string userId, string refreshToken)
+        public async Task<(string token, string refreshToken, string role)> RefreshTokenAsync(string userId, string refreshToken)
         {
             var token = await _unitOfWork.RefreshTokenRepository.GetAsync(rt => rt.TokenHash == refreshToken && rt.UserId == userId)
                 .ConfigureAwait(false);
@@ -95,7 +95,7 @@ namespace BaseProject.Application.Services.Impl
             await _unitOfWork.RefreshTokenRepository.AddAsync(newRefreshToken);
             await _unitOfWork.CommitAsync();
 
-            return (newJwtToken, newRefreshToken);
+            return (newJwtToken, newRefreshToken.TokenHash, user.Role.Name);
         }
 
         public async Task<int> LogoutAsync(string userId)
