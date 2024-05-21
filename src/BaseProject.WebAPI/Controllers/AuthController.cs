@@ -14,14 +14,12 @@ namespace BaseProject.WebAPI.Controllers
     public class AuthController : BaseApiController
     {
         private readonly IAuthService _authService;
-        private readonly ICookieService _cookieService;
         private readonly IEmailService _emailService;
         private readonly IUserService _userService;
 
-        public AuthController(IAuthService authService, ICookieService cookieService, IEmailService emailService, IUserService userService)
+        public AuthController(IAuthService authService, IEmailService emailService, IUserService userService)
         {
             _authService = authService;
-            _cookieService = cookieService;
             _emailService = emailService;
             _userService = userService;
         }
@@ -56,8 +54,6 @@ namespace BaseProject.WebAPI.Controllers
                     Message = "User logged in successfully",
                     Data = new { token, refreshToken }
                 };
-                _cookieService.SetCookie("jwt", token, null, 30);
-                _cookieService.SetCookie("refreshToken", refreshToken.TokenHash, 7, null);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -76,8 +72,6 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("User not found");
                 }
-                _cookieService.RemoveCookie("jwt");
-                _cookieService.RemoveCookie("refreshToken");
                 var response = new GeneralResponse
                 {
                     Message = "User logged out successfully"
@@ -184,13 +178,11 @@ namespace BaseProject.WebAPI.Controllers
         }
 
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshTokenAsync([FromBody] string refreshToken)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequest refreshTokenRequest)
         {
             try
             {
-                var (newToken, newRefreshToken) = await _authService.RefreshTokenAsync(refreshToken);
-                _cookieService.SetCookie("jwt", newToken, null, 30);
-                _cookieService.SetCookie("refreshToken", newRefreshToken.TokenHash, 7, null);
+                var (newToken, newRefreshToken) = await _authService.RefreshTokenAsync(refreshTokenRequest.UserId, refreshTokenRequest.RefreshToken);
                 var response = new GeneralResponse
                 {
                     Message = "Token refreshed successfully",
@@ -207,6 +199,17 @@ namespace BaseProject.WebAPI.Controllers
                 };
                 return BadRequest(response);
             }
+        }
+
+        [HttpGet("test-auth")]
+        [Authorize]
+        public IActionResult TestAuth()
+        {
+            var response = new GeneralResponse
+            {
+                Message = "Test auth successfully"
+            };
+            return Ok(response);
         }
     }
 }

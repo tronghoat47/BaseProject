@@ -8,7 +8,7 @@ namespace BaseProject.Application.Services
 
         Task<(string token, RefreshToken refreshToken)> LoginAsync(string email, string password);
 
-        Task<(string token, RefreshToken refreshToken)> RefreshTokenAsync(string refreshToken);
+        Task<(string token, RefreshToken refreshToken)> RefreshTokenAsync(string userId, string refreshToken);
 
         Task<int> LogoutAsync(string userId);
 

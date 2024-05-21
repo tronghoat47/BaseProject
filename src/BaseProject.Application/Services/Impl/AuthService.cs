@@ -72,9 +72,9 @@ namespace BaseProject.Application.Services.Impl
             return (token, refreshToken);
         }
 
-        public async Task<(string token, RefreshToken refreshToken)> RefreshTokenAsync(string refreshToken)
+        public async Task<(string token, RefreshToken refreshToken)> RefreshTokenAsync(string userId, string refreshToken)
         {
-            var token = await _unitOfWork.RefreshTokenRepository.GetAsync(rt => rt.TokenHash == refreshToken, rt => rt.User)
+            var token = await _unitOfWork.RefreshTokenRepository.GetAsync(rt => rt.TokenHash == refreshToken && rt.UserId == userId)
                 .ConfigureAwait(false);
             if (token == null || token.ExpiredAt <= DateTime.UtcNow)
             {
