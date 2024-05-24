@@ -201,9 +201,20 @@ namespace BaseProject.WebAPI.Controllers
             }
         }
 
-        [HttpGet("test-auth")]
-        [Authorize]
+        [HttpGet("test-auth-admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult TestAuth()
+        {
+            var response = new GeneralResponse
+            {
+                Message = "Test auth successfully"
+            };
+            return Ok(response);
+        }
+
+        [HttpGet("test-auth-all")]
+        [Authorize()]
+        public IActionResult TestAuthAAAa()
         {
             var response = new GeneralResponse
             {

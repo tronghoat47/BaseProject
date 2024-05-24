@@ -2,7 +2,6 @@ using BaseProject.Application;
 using BaseProject.Infrastructure;
 using BaseProject.Infrastructure.DataAccess;
 using BaseProject.Infrastructure.Services.Core;
-using BaseProject.Infrastructure.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -85,8 +84,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseJwtCookieMiddleware();
 
 app.UseAuthentication();
 app.UseAuthorization();
