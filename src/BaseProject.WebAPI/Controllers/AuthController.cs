@@ -30,7 +30,7 @@ namespace BaseProject.WebAPI.Controllers
             try
             {
                 var result = await _authService.RegisterAsync(request.Email, request.Password, request.RoleId);
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "User registered successfully",
                     Data = result
@@ -49,7 +49,7 @@ namespace BaseProject.WebAPI.Controllers
             try
             {
                 var (token, refreshToken, role) = await _authService.LoginAsync(request.Email, request.Password);
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "User logged in successfully",
                     Data = new { token, refreshToken, role }
@@ -72,7 +72,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("User not found");
                 }
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "User logged out successfully"
                 };
@@ -99,7 +99,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("Failed to send email");
                 }
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "Reset password email sent successfully"
                 };
@@ -117,7 +117,7 @@ namespace BaseProject.WebAPI.Controllers
             try
             {
                 await _authService.ResetPasswordAsync(request.Email, request.Password);
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "Password reset successfully",
                 };
@@ -144,7 +144,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("Failed to send email");
                 }
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "Active account email sent successfully"
                 };
@@ -165,7 +165,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("Failed to active account");
                 }
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "Account activated successfully"
                 };
@@ -183,7 +183,7 @@ namespace BaseProject.WebAPI.Controllers
             try
             {
                 var (newToken, newRefreshToken, role) = await _authService.RefreshTokenAsync(refreshTokenRequest.UserId, refreshTokenRequest.RefreshToken);
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Message = "Token refreshed successfully",
                     Data = new { newToken, newRefreshToken, role }
@@ -192,35 +192,13 @@ namespace BaseProject.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                var response = new GeneralResponse
+                var response = new GeneralGetResponse
                 {
                     Success = false,
                     Message = ex.Message
                 };
                 return BadRequest(response);
             }
-        }
-
-        [HttpGet("test-auth-admin")]
-        [Authorize(Roles = "admin")]
-        public IActionResult TestAuth()
-        {
-            var response = new GeneralResponse
-            {
-                Message = "Test auth successfully"
-            };
-            return Ok(response);
-        }
-
-        [HttpGet("test-auth-all")]
-        [Authorize()]
-        public IActionResult TestAuthAAAa()
-        {
-            var response = new GeneralResponse
-            {
-                Message = "Test auth successfully"
-            };
-            return Ok(response);
         }
     }
 }
