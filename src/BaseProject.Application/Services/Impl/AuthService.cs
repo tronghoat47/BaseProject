@@ -2,6 +2,7 @@
 using BaseProject.Domain.Entities;
 using BaseProject.Domain.Interfaces;
 using BaseProject.Infrastructure.Helpers;
+using BaseProject.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -17,12 +18,14 @@ namespace BaseProject.Application.Services.Impl
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITokenService _tokenService;
         private readonly ICryptographyHelper _cryptographyHelper;
+        private readonly IEmailService _emailService;
 
-        public AuthService(IUnitOfWork unitOfWork, ITokenService tokenService, ICryptographyHelper cryptographyHelper)
+        public AuthService(IUnitOfWork unitOfWork, ITokenService tokenService, ICryptographyHelper cryptographyHelper, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
             _cryptographyHelper = cryptographyHelper;
+            _emailService = emailService;
         }
 
         public async Task<User> RegisterAsync(string email, string password, int roleId)
@@ -45,11 +48,18 @@ namespace BaseProject.Application.Services.Impl
             };
 
             await _unitOfWork.UserRepository.AddAsync(user);
-            await _unitOfWork.CommitAsync();
+            if (await _unitOfWork.CommitAsync() > 0)
+            {
+                var isSuccess = await _emailService.SendEmailAsync(user.Email, EmailConstants.SUBJECT_ACTIVE_ACCOUNT, EmailConstants.BodyActivationEmail(email));
+                if (!isSuccess)
+                {
+                    throw new InvalidOperationException("Failed to send email");
+                }
+            }
             return user;
         }
 
-        public async Task<(string token, string refreshToken, string role)> LoginAsync(string email, string password)
+        public async Task<(string token, string refreshToken, string role, string userId)> LoginAsync(string email, string password)
         {
             var user = await _unitOfWork.UserRepository.GetAsync(u => u.Email == email, u => u.Role);
             if (user == null || !_cryptographyHelper.VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
@@ -69,12 +79,12 @@ namespace BaseProject.Application.Services.Impl
             await _unitOfWork.RefreshTokenRepository.AddAsync(refreshToken);
             await _unitOfWork.CommitAsync();
 
-            return (token, refreshToken.TokenHash, user.Role.Name);
+            return (token, refreshToken.TokenHash, user.Role.Name, user.Id);
         }
 
-        public async Task<(string token, string refreshToken, string role)> RefreshTokenAsync(string userId, string refreshToken)
+        public async Task<(string token, string refreshToken, string role, string userId)> RefreshTokenAsync(string refreshToken)
         {
-            var token = await _unitOfWork.RefreshTokenRepository.GetAsync(rt => rt.TokenHash == refreshToken && rt.UserId == userId)
+            var token = await _unitOfWork.RefreshTokenRepository.GetAsync(rt => rt.TokenHash == refreshToken)
                 .ConfigureAwait(false);
             if (token == null || token.ExpiredAt <= DateTime.UtcNow)
             {
@@ -95,7 +105,7 @@ namespace BaseProject.Application.Services.Impl
             await _unitOfWork.RefreshTokenRepository.AddAsync(newRefreshToken);
             await _unitOfWork.CommitAsync();
 
-            return (newJwtToken, newRefreshToken.TokenHash, user.Role.Name);
+            return (newJwtToken, newRefreshToken.TokenHash, user.Role.Name, user.Id);
         }
 
         public async Task<int> LogoutAsync(string userId)
@@ -105,8 +115,12 @@ namespace BaseProject.Application.Services.Impl
             return await _unitOfWork.CommitAsync();
         }
 
-        public async Task<int> ResetPasswordAsync(string email, string newPassword)
+        public async Task<int> ResetPasswordAsync(string email, string newPassword, string confirmPassword)
         {
+            if (newPassword != confirmPassword)
+            {
+                throw new InvalidOperationException("Passwords do not match");
+            }
             var user = await _unitOfWork.UserRepository.GetAsync(u => u.Email == email);
             if (user == null)
             {

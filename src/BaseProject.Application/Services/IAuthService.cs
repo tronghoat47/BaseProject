@@ -6,12 +6,12 @@ namespace BaseProject.Application.Services
     {
         Task<User> RegisterAsync(string email, string password, int roleId);
 
-        Task<(string token, string refreshToken, string role)> LoginAsync(string email, string password);
+        Task<(string token, string refreshToken, string role, string userId)> LoginAsync(string email, string password);
 
-        Task<(string token, string refreshToken, string role)> RefreshTokenAsync(string userId, string refreshToken);
+        Task<(string token, string refreshToken, string role, string userId)> RefreshTokenAsync(string refreshToken);
 
         Task<int> LogoutAsync(string userId);
 
-        Task<int> ResetPasswordAsync(string email, string newPassword);
+        Task<int> ResetPasswordAsync(string email, string newPassword, string confirmPassword);
     }
 }

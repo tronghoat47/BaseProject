@@ -39,7 +39,7 @@ namespace BaseProject.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Conflict(ex.Message);
             }
         }
 
@@ -48,17 +48,17 @@ namespace BaseProject.WebAPI.Controllers
         {
             try
             {
-                var (token, refreshToken, role) = await _authService.LoginAsync(request.Email, request.Password);
+                var (token, refreshToken, role, userId) = await _authService.LoginAsync(request.Email, request.Password);
                 var response = new GeneralGetResponse
                 {
                     Message = "User logged in successfully",
-                    Data = new { token, refreshToken, role }
+                    Data = new { token, refreshToken, role, userId }
                 };
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Conflict(ex.Message);
             }
         }
 
@@ -72,7 +72,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("User not found");
                 }
-                var response = new GeneralGetResponse
+                var response = new GeneralBoolResponse
                 {
                     Message = "User logged out successfully"
                 };
@@ -80,7 +80,7 @@ namespace BaseProject.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Conflict(ex.Message);
             }
         }
 
@@ -99,7 +99,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("Failed to send email");
                 }
-                var response = new GeneralGetResponse
+                var response = new GeneralBoolResponse
                 {
                     Message = "Reset password email sent successfully"
                 };
@@ -107,7 +107,7 @@ namespace BaseProject.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Conflict(ex.Message);
             }
         }
 
@@ -116,8 +116,8 @@ namespace BaseProject.WebAPI.Controllers
         {
             try
             {
-                await _authService.ResetPasswordAsync(request.Email, request.Password);
-                var response = new GeneralGetResponse
+                await _authService.ResetPasswordAsync(request.Email, request.Password, request.ConfirmPassword);
+                var response = new GeneralBoolResponse
                 {
                     Message = "Password reset successfully",
                 };
@@ -125,7 +125,12 @@ namespace BaseProject.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var response = new GeneralBoolResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+                return Conflict(response);
             }
         }
 
@@ -144,7 +149,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("Failed to send email");
                 }
-                var response = new GeneralGetResponse
+                var response = new GeneralBoolResponse
                 {
                     Message = "Active account email sent successfully"
                 };
@@ -152,7 +157,7 @@ namespace BaseProject.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Conflict(ex.Message);
             }
         }
 
@@ -165,7 +170,7 @@ namespace BaseProject.WebAPI.Controllers
                 {
                     throw new InvalidOperationException("Failed to active account");
                 }
-                var response = new GeneralGetResponse
+                var response = new GeneralBoolResponse
                 {
                     Message = "Account activated successfully"
                 };
@@ -173,7 +178,7 @@ namespace BaseProject.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Conflict(ex.Message);
             }
         }
 
@@ -182,22 +187,22 @@ namespace BaseProject.WebAPI.Controllers
         {
             try
             {
-                var (newToken, newRefreshToken, role) = await _authService.RefreshTokenAsync(refreshTokenRequest.UserId, refreshTokenRequest.RefreshToken);
+                var (newToken, newRefreshToken, role, userId) = await _authService.RefreshTokenAsync(refreshTokenRequest.RefreshToken);
                 var response = new GeneralGetResponse
                 {
                     Message = "Token refreshed successfully",
-                    Data = new { newToken, newRefreshToken, role }
+                    Data = new { newToken, newRefreshToken, role, userId }
                 };
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                var response = new GeneralGetResponse
+                var response = new GeneralBoolResponse
                 {
                     Success = false,
                     Message = ex.Message
                 };
-                return BadRequest(response);
+                return Conflict(response);
             }
         }
     }
